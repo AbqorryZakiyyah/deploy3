@@ -82,7 +82,10 @@ def home():
         diary = request.form.get('diary')
 
         if len(diary) < 1:
-            flash('Your Diary is too short!', category='error') 
+            flash('Your Diary is too short!', category='error')
+            response=return {'status': 'error', 'message': 'Your Diary is too short!'}
+            response.status_code = 400
+            return response
         else:
             
             # Fungsi untuk melakukan preprocessing pada teks
@@ -152,7 +155,9 @@ def home():
             db.session.add(new_diary) 
             db.session.commit()
             flash('Diary added!', category='success')
-            return {'status': 'success', 'diary': diary, 'hasil_predict': predict_list}
+            response=return {'status': 'success', 'diary': diary, 'hasil_predict': predict_list}
+            response.status_code = 200
+            return response
 
 
     #return render_template("home.html", user=current_user)
