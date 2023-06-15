@@ -18,15 +18,21 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return {'status': 'success', 'message': 'Login berhasil'}
+                response=return {'status': 'success', 'message': 'Login berhasil'}
+                response.status_code = 200
+                return response
                 #return redirect(url_for('views.home'))
 
             else:
                 flash('Incorrect password, try again.', category='error')
-                return {'status': 'error', 'message': 'Incorrect password'}
+                response=return {'status': 'error', 'message': 'Incorrect password'}
+                response.status_code = 400
+                return response
         else:
             flash('Email does not exist.', category='error')
-            return {'status': 'error', 'message': 'Email does not exist.'}
+            response=return {'status': 'error', 'message': 'Email does not exist.'}
+            response.status_code = 400
+            return response
     
     #return render_template("login.html", user=current_user)
 
@@ -35,7 +41,9 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return {'status': 'success', 'message': 'Logout berhasil'}
+    response=return {'status': 'success', 'message': 'Logout berhasil'}
+    response.status_code = 200
+    return response
 
 
 @auth.route('/sign_up', methods=['GET', 'POST'])
@@ -49,19 +57,29 @@ def sign_up():
         user = User.query.filter_by(email=email).first()
         if user:
             flash('Email already exists.', category='error')
-            return {'status': 'error', 'message': 'Email already exists.'}
+            response=return {'status': 'error', 'message': 'Email already exists.'}
+            response.status_code = 400
+            return response
         elif len(email) < 4:
             flash('Email must be greater than 3 characters.', category='error')
-            return {'status': 'error', 'message': 'Email must be greater than 3 characters.'}
+            response=return {'status': 'error', 'message': 'Email must be greater than 3 characters.'}
+            response.status_code = 400
+            return response
         elif len(first_name) < 2:
             flash('First name must be greater than 1 character.', category='error')
-            return {'status': 'error', 'message': 'First name must be greater than 1 character.'}
+            response=return {'status': 'error', 'message': 'First name must be greater than 1 character.'}
+            response.status_code = 400
+            return response
         elif password1 != password2:
             flash('Passwords don\'t match.', category='error')
-            return {'status': 'error', 'message': 'Passwords don\'t match.'}
+            response=return {'status': 'error', 'message': 'Passwords don\'t match.'}
+            response.status_code = 400
+            return response
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
-            return {'status': 'error', 'message': 'Password must be at least 7 characters.'}
+            response=return {'status': 'error', 'message': 'Password must be at least 7 characters.'}
+            response.status_code = 400
+            return response
         else:
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(
                 password1, method='sha256'))
@@ -69,7 +87,9 @@ def sign_up():
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            return {'status': 'success', 'message': 'Registrasi Berhasil'}
+            response=return {'status': 'success', 'message': 'Registrasi Berhasil'}
+            response.status_code = 200
+            return response
 
     #return render_template("sign_up.html", user=current_user)
 
