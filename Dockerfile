@@ -14,7 +14,7 @@ RUN pip install gunicorn
 
 # Menyalin seluruh isi direktori proyek ke dalam container
 COPY . ./
-
+EXPOSE 5000
 # Menjalankan perintah untuk menjalankan aplikasi Flask
 CMD ["python", "main.py"]
 
