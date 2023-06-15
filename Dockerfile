@@ -12,9 +12,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install gunicorn
 
+COPY main.py
 # Menyalin seluruh isi direktori proyek ke dalam container
 COPY . ./
-EXPOSE 5000
 # Menjalankan perintah untuk menjalankan aplikasi Flask
 CMD ["python", "main.py"]
 
