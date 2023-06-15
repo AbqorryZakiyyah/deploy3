@@ -75,7 +75,7 @@ def download_credentials():
 new_model, tokenizer = load_model_tokenizer()
 
 
-@views.route('/home', methods=['GET', 'POST'])
+@views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
     if request.method == 'POST': 
